@@ -196,6 +196,39 @@ func TestSymmetricDifference(t *testing.T) {
 	f("two empty sets", []int{}, []int{}, []int{})
 }
 
+// Add()
+
+func TestAdd(t *testing.T) {
+	f := func(description string, s1, s2, sExpected []int) {
+		t.Run(description, func(t *testing.T) {
+			s := NewSet(s1...).Add(s2...)
+			assert.Equal(t, sExpected, s.List())
+		})
+	}
+
+	f("without intersection", []int{2, 1, 3}, []int{6, 5, 4}, []int{1, 2, 3, 4, 5, 6})
+	f("with intersection", []int{2, 1, 3}, []int{4, 2, 3}, []int{1, 2, 3, 4})
+	f("with empty set", []int{2, 1, 3}, []int{}, []int{1, 2, 3})
+	f("two empty sets", []int{}, []int{}, []int{})
+}
+
+// Remove()
+
+func TestRemove(t *testing.T) {
+	f := func(description string, s1, s2, sExpected []int) {
+		t.Run(description, func(t *testing.T) {
+			s := NewSet(s1...).Remove(s2...)
+			assert.Equal(t, sExpected, s.List())
+		})
+	}
+
+	f("without intersection", []int{2, 1, 3}, []int{6, 5, 4}, []int{1, 2, 3})
+	f("with intersection", []int{2, 1, 3}, []int{4, 2, 3}, []int{1})
+	f("with empty set", []int{2, 1, 3}, []int{}, []int{1, 2, 3})
+	f("from empty set", []int{}, []int{2, 1, 3}, []int{})
+	f("two empty sets", []int{}, []int{}, []int{})
+}
+
 // IsSubsetOf()
 
 func TestIsSubsetOf(t *testing.T) {
